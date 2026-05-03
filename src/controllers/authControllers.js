@@ -22,17 +22,17 @@ const signup = async (req, res) => {
     }
 }
 
-const login = (req, res) => {
+const login = async (req, res) => {
     try{
         const {emailId, password} = req.body;
         if(!emailId || !password){
             throw new Error("All fields are required");
         }
         validators.emailValidator(emailId);
-        const user = await authServices.login(userId, password);
+        const user = await authServices.login(emailId, password);
         const token = await jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '7d'});
         res.cookie("token", token, {expires: new Date(Date.now() + 7*24*60*60*1000)});
-        res.status(201).json({message: "Logged in successfully", data: user.rows[0]});
+        res.status(201).json({message: "Logged in successfully", data: user});
 
     }
     catch(err){
@@ -40,4 +40,4 @@ const login = (req, res) => {
     }
 }
 
-export default {signup};
+export default {signup, login};
