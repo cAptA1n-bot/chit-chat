@@ -13,6 +13,7 @@ const signup = async (req, res) => {
         validators.passwordValidator(password);
 
         const user = await authServices.signup(firstName, lastName, emailId, password);
+        user = user.rows[0];
         const token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: '7d'});
         res.cookie("token", token, {expires: new Date(Date.now() + 7*24*60*60*1000)});
         res.status(201).json({message: "User created successfully", data: user.rows[0]});
