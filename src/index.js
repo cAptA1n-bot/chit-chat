@@ -4,12 +4,14 @@ import {connectPG} from './database/pg.js';
 import { configDotenv } from 'dotenv';
 import cookieParser from 'cookie-parser';
 import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/users', authRouter)
+app.use('/auth', authRouter);
+app.use('/users', userRouter);
 
 const startServer = async () => {
   try {
