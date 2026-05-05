@@ -9,7 +9,9 @@ const sendMessage = async (senderId, receiverId, content) => {
     )
     result = result.rows[0];
     if(!result){
-        throw new Error({status: 404, message: 'User not found'});
+        const err = new Error("User not found");
+        err.status = 404;
+        throw err;
     }
     await Chat.create({senderId, receiverId, content});
     return;

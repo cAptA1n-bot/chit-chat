@@ -10,11 +10,13 @@ const sendMessage = async (req, res) => {
         if(typeof(receiverId) !== "number" && typeof(content) !== "string"){
             return res.status(400).json({message: "Invalid information"});
         }
+        if(receiverId === senderId){
+            return res.status(400).json({message: "Invalid operation"});
+        }
         await messageServices.sendMessage(senderId, receiverId, content);
         res.status(204).send();
     }
     catch(err){
-        console.log(err);
         if(err?.status == 404){
             return res.status(404).json({message: err.message});
         }
