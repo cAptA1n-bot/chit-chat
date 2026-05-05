@@ -1,20 +1,8 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
-const chatSchema = new Schema({
-    senderId: {
-        type: Number,
-        require: true
-    },
-    receiverId: {
-        type: Number,
-        require: true
-    },
-    content: {
-        type: String,
-        require: true
-    }
-}, {timestamps: true});
+const connectMongo = async () => {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connected...");
+}
 
-const chat = mongoose.model("chat", chatSchema);
-
-export default chat;
+export default connectMongo;
