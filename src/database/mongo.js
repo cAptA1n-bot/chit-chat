@@ -3,14 +3,15 @@ import mongoose from "mongoose";
 const chatSchema = new Schema({
     senderId: {
         type: Number,
-        required: true
+        require: true
     },
     receiverId: {
         type: Number,
-        required: true
+        require: true
     },
     content: {
-        type: String
+        type: String,
+        require: true
     }
 }, {timestamps: true});
 
