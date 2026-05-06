@@ -17,4 +17,19 @@ const sendMessage = async (senderId, receiverId, content) => {
     return;
 }
 
-export default {sendMessage}
+const getMessages = async(recId, userId) => {
+    const result = await pool.query(
+        `SELECT * FROM users
+        WHERE id = $1`,
+        [recId]
+    )
+    if(!result){
+        const err = new Error("User not found");
+        err.status = 404;
+        throw err;
+    }
+    const chat = await Chat.find({$or: [{$and: [{receiverId: recId}, {senderId: userId}]},{$and: [{receiverId: userId}, {senderId: recId}]}]});
+    return chat;
+}
+
+export default {sendMessage, getMessages}

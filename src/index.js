@@ -14,7 +14,7 @@ app.use(cookieParser());
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
-app.use('/messages', messageRouter);
+app.use('/chat', messageRouter);
 
 const startServer = async () => {
   try {
